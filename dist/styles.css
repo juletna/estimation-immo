@@ -72,3 +72,5 @@
     }
   
 .parcel-city-label{margin-top:14px}
+
+.field select{font:inherit;width:100%;height:46px;border:1px solid #cbd9dd;border-radius:10px;padding:0 13px;background:#fbfdfd;color:#17313b}.field select:focus{outline:2px solid #0f7888;outline-offset:2px}#terrain-field[hidden]{display:none}

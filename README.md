@@ -1,8 +1,8 @@
-# Estimer ma maison
+# Estimer mon bien
 
 [Ouvrir l'estimateur en ligne](https://juletna.github.io/estimation-immo/)
 
-Estimateur indicatif de maisons en France à partir des ventes DVF. La page cherche une adresse ou une référence cadastrale, sélectionne des ventes comparables à proximité et affiche leur prix de vente, une projection à la surface saisie et un score de pertinence.
+Estimateur indicatif de maisons et appartements (y compris les studios de moins de 20 m²) en France à partir des ventes DVF. La page cherche une adresse ou une référence cadastrale, sélectionne des ventes comparables à proximité et affiche leur prix de vente, une projection à la surface saisie et un score de pertinence.
 
 Le site statique se trouve dans [`dist/`](dist/). Il utilise en direct les API publiques DVF, de géocodage et du cadastre : une connexion Internet est nécessaire, même en local. L'état du bien, les travaux, la piscine et le DPE ne sont pas valorisés automatiquement. Le résultat ne constitue pas une expertise immobilière.
 
