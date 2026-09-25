@@ -1,0 +1,13 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const vm=require('node:vm');
+const fs=require('node:fs');
+const source=fs.readFileSync('dist/app.js','utf8');
+const ctx=vm.createContext({distance:()=>0});
+vm.runInContext(source.slice(source.indexOf('    function cleanGarageSales'),source.indexOf('    function garageRelevance')),ctx);
+const row={id_mutation:'single',nature_mutation:'Vente',type_local:'Dépendance',nombre_lots:1,lot1_numero:'12',valeur_fonciere:20000,longitude:5.37,latitude:43.3,date_mutation:new Date().toISOString().slice(0,10),surface_reelle_bati:null};
+const clean=rows=>ctx.cleanGarageSales(rows,5.37,43.3);
+test('isolated dependency without surface is retained; exact response duplicates do not inflate count',()=>{assert.equal(clean([row,{...row}]).length,1);assert.equal(clean([row])[0].price,20000)});
+test('mixed mutation excluded even when apartment row would fail residential filters',()=>{assert.equal(clean([row,{...row,type_local:'Appartement',surface_reelle_bati:null}]).length,0)});
+test('multi-lot and multi-row transactions excluded, including different dispositions',()=>{for(const rows of [[{...row,nombre_lots:2}],[row,{...row,lot1_numero:'13'}],[row,{...row,numero_disposition:2}],[{...row,lot2_numero:'14'}]])assert.equal(clean(rows).length,0)});
+test('missing lot, coordinates, invalid price and old date excluded',()=>{for(const change of [{nombre_lots:null},{lot1_numero:null},{longitude:null},{valeur_fonciere:0},{date_mutation:'2010-01-01'}])assert.equal(clean([{...row,...change}]).length,0)});
