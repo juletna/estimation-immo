@@ -2,175 +2,26 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://data.geopf.fr https://apicarto.ign.fr https://cadastre.data.gouv.fr https://dvf-api.data.gouv.fr; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Estimez une maison à partir des ventes immobilières DVF autour de son adresse.">
   <meta name="theme-color" content="#102f40">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23102f40'/%3E%3Cpath d='M11 32 32 15l21 17v20H11V32Z' fill='none' stroke='%23f4d18b' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M26 52V36h12v16' fill='none' stroke='%23f4d18b' stroke-width='5'/%3E%3C/svg%3E">
   <title>Estimer ma maison · Ventes DVF</title>
-  <style>
-    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17313b;background:#f4f7f8;font-size:16px}
-    *{box-sizing:border-box}body{margin:0}button,input{font:inherit}a{color:#0b6676}button{cursor:pointer}button:disabled{cursor:wait;opacity:.65}
-    .shell{max-width:1160px;margin:auto;padding:28px 24px 64px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.02em;color:#102f40}.mark{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#102f40;color:#f6d28a;font-size:23px}.topbar small{font-size:.85rem;color:#5c727a}
-    .main{display:grid;grid-template-columns:minmax(320px,430px) minmax(0,1fr);gap:22px;align-items:start}.panel,.result{background:white;border:1px solid #dce6e9;border-radius:20px;box-shadow:0 12px 35px #1235450b;overflow:hidden}.photo{height:170px;background:#dce6e9 url('./maison.png') center 47%/cover}.form-inner{padding:25px}.eyebrow{font-size:.76rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#2e7c87;margin:0 0 9px}h1{font-size:clamp(1.6rem,2.2vw,2.2rem);line-height:1.12;letter-spacing:-.045em;margin:0 0 10px;color:#102f40}p{line-height:1.5}.intro{color:#60737b;margin:0 0 24px;font-size:.95rem}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field.wide{grid-column:1/-1}.field label{display:block;font-weight:700;font-size:.9rem;margin-bottom:7px}.field input{width:100%;height:46px;border:1px solid #cbd9dd;border-radius:10px;padding:0 13px;background:#fbfdfd;color:#17313b;outline:none}.field input:focus{border-color:#0f7888;box-shadow:0 0 0 3px #0f788820}.help{font-size:.78rem;color:#6b7e85;margin-top:6px}.submit{width:100%;margin-top:21px;background:#0e6372;color:#fff;border:0;border-radius:11px;padding:14px 18px;font-weight:750;transition:background .15s}.submit:hover{background:#0a5160}.fine{font-size:.8rem;color:#6b7e85;margin:13px 0 0}
-    .result{min-height:460px}.empty{padding:44px;min-height:460px;display:flex;flex-direction:column;justify-content:center}.empty-icon{width:55px;height:55px;border-radius:16px;background:#dff0f1;color:#0b6676;display:grid;place-items:center;font-size:28px;margin-bottom:18px}.empty h2,.output h2{font-size:1.4rem;letter-spacing:-.03em;margin:0 0 8px;color:#102f40}.empty p{max-width:460px;color:#657982;margin:0}.output{padding:30px}.result-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.badge{background:#e6f2f3;color:#156576;padding:6px 10px;border-radius:100px;font-size:.77rem;font-weight:800;white-space:nowrap}.address{color:#637780;margin:3px 0 24px}.value{font-size:clamp(2.5rem,4.3vw,4rem);line-height:1;letter-spacing:-.065em;font-weight:800;color:#102f40;margin:8px 0}.range{font-size:1rem;color:#3f636e;margin:8px 0 22px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 25px}.metric{background:#f3f7f8;border-radius:12px;padding:13px}.metric b{display:block;font-size:1.05rem}.metric span{display:block;font-size:.78rem;color:#647a82;margin-top:2px}.section-title{border-top:1px solid #e5edef;padding-top:22px;font-weight:800;margin:0 0 6px}.note{font-size:.87rem;color:#6a7e86;margin:0 0 15px}.sales{display:grid;gap:9px}.sale{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f8fafb;border:1px solid #e8eff1;border-radius:11px;padding:12px 14px}.sale strong{display:block;font-size:.92rem}.sale small{display:block;color:#647880;margin-top:3px;font-size:.77rem}.sale .amount{text-align:right;white-space:nowrap}.sale .amount small{font-weight:400}.notice{border-left:3px solid #d9aa5c;background:#fffaf0;padding:11px 14px;font-size:.82rem;color:#6c614d;border-radius:0 8px 8px 0;margin-top:20px}.error{border-color:#ad5360;background:#fff5f5;color:#873f4b}.sources{font-size:.8rem;color:#6e8188;margin-top:18px}.sources a{color:#0b6676}.spinner{display:inline-block;width:14px;height:14px;border:2px solid #c4e3e8;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:-2px}@keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:800px){.main{grid-template-columns:1fr}.result{min-height:300px}.empty{min-height:300px}.photo{height:130px}}@media(max-width:520px){.shell{padding:17px 14px 44px}.topbar small{display:none}.form-inner,.output{padding:22px}.empty{padding:30px}.metrics{grid-template-columns:1fr 1fr}.sale{align-items:flex-start}.sale small{line-height:1.3}}
-  </style>
-  <style>
-    .mode-switch{display:flex;gap:5px;padding:4px;background:#edf3f5;border-radius:12px;margin:0 0 21px}
-    .mode-switch button{flex:1;border:0;background:transparent;color:#48636d;font-weight:750;font-size:.88rem;padding:10px 9px;border-radius:9px}
-    .mode-switch button[aria-pressed="true"]{background:#fff;color:#102f40;box-shadow:0 2px 8px #12354512}
-    .search-mode[hidden]{display:none}
-    .data-note{font-size:.79rem;color:#657982;margin:11px 0 0;line-height:1.45}
-    .selection-scope{background:#edf5f6;border:1px solid #d6e8eb;border-radius:12px;padding:14px 16px;margin:0 0 25px;color:#385963;font-size:.88rem;line-height:1.5}
-    .selection-scope strong{display:block;color:#173f4a;margin-bottom:3px}
-    .sale small{line-height:1.4}
-    .sale .amount{min-width:190px}
-    .sale .actual-price{color:#102f40;font-size:1.08rem}
-    .sale .amount-label{font-size:.7rem;font-weight:750;text-transform:uppercase;letter-spacing:.04em;color:#6a7e86}
-    .sale .projection{display:flex;justify-content:flex-end;gap:8px;align-items:baseline;border-top:1px solid #dce9eb;margin-top:9px;padding-top:8px;color:#0b6676;font-size:.79rem}
-    .sale .projection b{font-size:.9rem;white-space:nowrap}
-    .result-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .print-button{border:1px solid #b9d4d9;border-radius:9px;background:white;color:#0b6676;padding:8px 11px;font-size:.8rem;font-weight:750}
-    .print-button:hover{background:#edf5f6}
-    .report-context{font-size:.83rem;color:#536c75;margin:-17px 0 21px}
-    .relevance{display:inline-block;margin-top:7px;border-radius:6px;background:#e6f2f3;color:#145c69;padding:3px 7px;font-size:.72rem;font-weight:800}
-    .relevance.mid{background:#f4f0dd;color:#786322}
-    .relevance.low{background:#f7e9e7;color:#975a50}
-    .mobile-search-header,.new-estimate-button{display:none}
-    @media(min-width:801px){.panel{position:sticky;top:18px}}
-    @media(max-width:800px){
-      .main{gap:14px}
-      .photo{display:none}
-      .mobile-search-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
-      .mobile-search-header strong{display:block;color:#102f40;font-size:1.03rem}
-      .mobile-search-kicker{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#2e7c87;margin-bottom:2px}
-      #search-toggle{display:flex;align-items:center;gap:7px;flex:none;border:1px solid #b9d4d9;background:white;color:#0b6676;border-radius:9px;padding:8px 10px;font-size:.78rem;font-weight:750}
-      .mobile-chevron{font-size:1rem;line-height:1;transform:rotate(180deg)}
-      .panel[data-collapsed="true"] .search-content{display:none}
-      .panel[data-collapsed="true"] .mobile-chevron{transform:none}
-      .search-content .form-inner{padding-top:0}
-      .form-inner .eyebrow{display:none}
-      .form-inner h1{font-size:1.55rem;margin-top:3px}
-      .form-inner .intro{margin:3px 0 18px}
-      .result[data-state="idle"]{display:none}
-      .result{scroll-margin-top:14px}
-      .new-estimate-button{display:inline-block;border:1px solid #b9d4d9;border-radius:9px;background:#edf5f6;color:#0b6676;padding:8px 11px;font-size:.8rem;font-weight:750}
-    }
-    @media(max-width:520px){.mobile-search-header{padding:13px 14px}.result-actions{justify-content:flex-start}.result-head{flex-wrap:wrap}.new-estimate-button{order:2}.print-button{order:3}}
-    @media(max-width:520px){.sale{flex-direction:column}.sale .amount{text-align:left;min-width:0}.sale .projection{justify-content:flex-start}}
-    @page{size:A4;margin:14mm}
-    @media print{
-      :root{background:white;color:#17313b;font-size:11pt}
-      body{background:white}
-      .shell{max-width:none;padding:0}
-      .topbar,.panel,.print-button,.new-estimate-button{display:none!important}
-      .main{display:block}
-      .result{border:0;border-radius:0;box-shadow:none;min-height:0;overflow:visible}
-      .output{padding:0}
-      .result-head,.metrics,.selection-scope,.sale,.notice{break-inside:avoid;page-break-inside:avoid}
-      .result-head{border-bottom:1px solid #cbd9dd;padding-bottom:9px}
-      .value{font-size:30pt}
-      .address{margin-bottom:18px}
-      .report-context{margin:-12px 0 16px}
-      .metrics{margin:15px 0}
-      .metric,.selection-scope,.sale,.notice{background:white!important}
-      .sales{grid-template-columns:1fr}
-      .sale{padding:8px 10px}
-      .sales{gap:6px}
-      .sources{margin-top:12px}
-    }
-  </style>
+  
+  
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <div class="shell">
     <header class="topbar"><div class="brand"><span class="mark" aria-hidden="true">⌂</span><span>Estimer ma maison</span></div><small>Basé sur les ventes immobilières DVF</small></header>
     <main class="main">
       <section class="panel" id="search-panel" data-collapsed="false" aria-labelledby="page-title"><div class="mobile-search-header"><div><span class="mobile-search-kicker">Estimation immobilière</span><strong id="mobile-search-title">Créer une estimation</strong></div><button id="search-toggle" type="button" aria-controls="search-content" aria-expanded="true"><span id="search-toggle-text">Masquer</span><span class="mobile-chevron" aria-hidden="true">⌄</span></button></div><div class="search-content" id="search-content"><div class="photo" role="img" aria-label="Façade d’une maison française"></div><div class="form-inner"><p class="eyebrow">Estimation immobilière</p><h1 id="page-title">Combien vaut votre maison&nbsp;?</h1><p class="intro">Comparez-la aux maisons vendues près de votre adresse ou parcelle.</p>
-      <form id="estimate-form"><div class="mode-switch" role="group" aria-label="Localiser la maison"><button id="address-mode" type="button" aria-pressed="true">Par adresse</button><button id="parcel-mode" type="button" aria-pressed="false">Par parcelle</button></div><div class="fields"><div class="field wide search-mode" id="address-fields"><label for="address">Adresse de la maison</label><input id="address" name="address" type="text" autocomplete="street-address" list="address-options" placeholder="12 rue des Tilleuls, 44000 Nantes" required minlength="8"><datalist id="address-options"></datalist><div class="help">Commencez à saisir, puis choisissez une adresse proposée.</div></div><div class="field wide search-mode" id="parcel-fields" hidden><label for="parcel-ref">Référence cadastrale</label><input id="parcel-ref" name="parcel-ref" type="text" placeholder="AD 243 ou 33063000AD0243"><div class="help">Section et numéro, ou référence complète à 14 caractères.</div><label for="parcel-city" style="margin-top:14px">Commune de la parcelle</label><input id="parcel-city" name="parcel-city" type="text" placeholder="Bordeaux 33000"><div class="help">À renseigner si la référence ne contient pas le code INSEE.</div></div><div class="field"><label for="surface">Surface habitable</label><input id="surface" name="surface" type="number" min="20" max="1000" step="1" placeholder="120" required><div class="help">En m²</div></div><div class="field"><label for="terrain">Surface du terrain</label><input id="terrain" name="terrain" type="number" min="0" max="100000" step="1" placeholder="450"><div class="help">En m², facultatif</div></div></div><button class="submit" id="submit" type="submit">Estimer à partir des ventes</button><p class="data-note">DVF ne décrit pas la piscine, l’état intérieur ni le DPE. Ces éléments ne sont pas chiffrés automatiquement.</p><p class="fine">Aucune adresse n’est enregistrée par cette page.</p></form></div></div></section>
+      <form id="estimate-form"><div class="mode-switch" role="group" aria-label="Localiser la maison"><button id="address-mode" type="button" aria-pressed="true">Par adresse</button><button id="parcel-mode" type="button" aria-pressed="false">Par parcelle</button></div><div class="fields"><div class="field wide search-mode" id="address-fields"><label for="address">Adresse de la maison</label><input id="address" name="address" type="text" autocomplete="street-address" list="address-options" placeholder="12 rue des Tilleuls, 44000 Nantes" required minlength="8"><datalist id="address-options"></datalist><div class="help">Commencez à saisir, puis choisissez une adresse proposée.</div></div><div class="field wide search-mode" id="parcel-fields" hidden><label for="parcel-ref">Référence cadastrale</label><input id="parcel-ref" name="parcel-ref" type="text" placeholder="AD 243 ou 33063000AD0243"><div class="help">Section et numéro, ou référence complète à 14 caractères.</div><label for="parcel-city" class="parcel-city-label">Commune de la parcelle</label><input id="parcel-city" name="parcel-city" type="text" placeholder="Bordeaux 33000"><div class="help">À renseigner si la référence ne contient pas le code INSEE.</div></div><div class="field"><label for="surface">Surface habitable</label><input id="surface" name="surface" type="number" min="20" max="1000" step="1" placeholder="120" required><div class="help">En m²</div></div><div class="field"><label for="terrain">Surface du terrain</label><input id="terrain" name="terrain" type="number" min="0" max="100000" step="1" placeholder="450"><div class="help">En m², facultatif</div></div></div><button class="submit" id="submit" type="submit">Estimer à partir des ventes</button><p class="data-note">DVF ne décrit pas la piscine, l’état intérieur ni le DPE. Ces éléments ne sont pas chiffrés automatiquement.</p><p class="fine">Cette page ne conserve pas votre adresse. Dès 4 caractères saisis, le texte est envoyé à l’IGN pour proposer des adresses ; l’adresse est aussi transmise à l’IGN lors de la recherche.</p></form></div></div></section>
       <section class="result" id="result" data-state="idle" aria-live="polite"><div class="empty"><span class="empty-icon" aria-hidden="true">⌕</span><h2>Votre estimation apparaîtra ici</h2><p>Renseignez une adresse ou une parcelle, puis la surface habitable. Nous chercherons les ventes comparables à proximité.</p></div></section>
     </main>
   </div>
-  <script>
-  (()=>{
-    const form=document.querySelector('#estimate-form'), result=document.querySelector('#result'), button=document.querySelector('#submit'),searchPanel=document.querySelector('#search-panel'),searchToggle=document.querySelector('#search-toggle');
-    const initialResultHtml=result.innerHTML;
-    function setSearchCollapsed(collapsed){const hasResult=result.dataset.state==='success';searchPanel.dataset.collapsed=String(collapsed);searchToggle.setAttribute('aria-expanded',String(!collapsed));document.querySelector('#search-toggle-text').textContent=collapsed?(hasResult?'Modifier':'Afficher'):'Masquer';document.querySelector('#mobile-search-title').textContent=collapsed?(hasResult?'Estimation prête':'Votre recherche'):(hasResult?'Modifier l’estimation':'Créer une estimation')}
-    searchToggle.addEventListener('click',()=>setSearchCollapsed(searchPanel.dataset.collapsed!=='true'));
-    const euro=new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0});
-    const number=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0});
-    const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const median=values=>{let a=[...values].sort((x,y)=>x-y),m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])/2};
-    const quantile=(values,q)=>{let a=[...values].sort((x,y)=>x-y),i=(a.length-1)*q,l=Math.floor(i),f=i-l;return a[l]+(a[Math.min(l+1,a.length-1)]-a[l])*f};
-    const distance=(a,b,c,d)=>{const r=Math.PI/180,dl=(c-a)*r,dp=(d-b)*r,v=Math.sin(dp/2)**2+Math.cos(b*r)*Math.cos(d*r)*Math.sin(dl/2)**2;return 12742*Math.asin(Math.sqrt(v))};
-    async function json(url){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{let res=await fetch(url,{signal:controller.signal});if(!res.ok)throw Error('Service indisponible ('+res.status+').');return await res.json()}finally{clearTimeout(timer)}}
-    function bbox(coords,box=[Infinity,Infinity,-Infinity,-Infinity]){if(typeof coords[0]==='number'){box[0]=Math.min(box[0],coords[0]);box[1]=Math.min(box[1],coords[1]);box[2]=Math.max(box[2],coords[0]);box[3]=Math.max(box[3],coords[1])}else for(const c of coords)bbox(c,box);return box}
-    function boxDistance(lon,lat,box){return distance(lon,lat,Math.max(box[0],Math.min(lon,box[2])),Math.max(box[1],Math.min(lat,box[3])))}
-    function status(text){result.dataset.state='loading';result.innerHTML='<div class="empty"><span class="empty-icon" aria-hidden="true">⌕</span><h2>Recherche en cours</h2><p>'+escape(text)+'</p></div>'}
-    function message(title,body,kind=''){result.dataset.state='message';result.innerHTML='<div class="empty"><span class="empty-icon" aria-hidden="true">⌕</span><h2>'+escape(title)+'</h2><p>'+escape(body)+'</p>'+(kind?'<div class="notice error">Vous pouvez réessayer dans quelques instants.</div>':'')+'</div>'}
-    async function geocode(address){const post=address.match(/\b\d{5}\b/)?.[0];if(!post)throw Error('Ajoutez le code postal à l’adresse pour identifier la bonne commune.');const data=await json('https://data.geopf.fr/geocodage/search?q='+encodeURIComponent(address)+'&limit=1');const feature=data.features?.[0];if(!feature||feature.properties.score<.55||!feature.properties.citycode||feature.properties.postcode!==post)throw Error('Adresse introuvable. Vérifiez le numéro, la rue, le code postal et la commune.');return feature}
-    const addressInput=document.querySelector('#address'),addressOptions=document.querySelector('#address-options');
-    let completionTimer,completionRequest,completionSequence=0,mode='address';
-    addressInput.addEventListener('input',()=>{
-      clearTimeout(completionTimer);completionRequest?.abort();addressOptions.replaceChildren();
-      const query=addressInput.value.trim(),sequence=++completionSequence;
-      if(query.length<4)return;
-      completionTimer=setTimeout(async()=>{
-        completionRequest=new AbortController();
-        try{
-          const url='https://data.geopf.fr/geocodage/completion?text='+encodeURIComponent(query)+'&maximumResponses=6';
-          const response=await fetch(url,{signal:completionRequest.signal});if(!response.ok)return;
-          const data=await response.json();if(sequence!==completionSequence)return;
-          for(const item of data.results||[]){if(!item.fulltext)continue;const option=document.createElement('option');option.value=item.fulltext;addressOptions.append(option)}
-        }catch(error){if(error.name!=='AbortError')addressOptions.replaceChildren()}
-      },250);
-    });
-    function setMode(next){mode=next;document.querySelector('#address-mode').setAttribute('aria-pressed',String(next==='address'));document.querySelector('#parcel-mode').setAttribute('aria-pressed',String(next==='parcel'));document.querySelector('#address-fields').hidden=next!=='address';document.querySelector('#parcel-fields').hidden=next!=='parcel';addressInput.required=next==='address';document.querySelector('#parcel-ref').required=next==='parcel';addressOptions.replaceChildren()}
-    document.querySelector('#address-mode').addEventListener('click',()=>setMode('address'));
-    document.querySelector('#parcel-mode').addEventListener('click',()=>setMode('parcel'));
-    async function parcelLocation(reference,city){
-      const ref=reference.toUpperCase().replace(/[^A-Z0-9]/g,'');let code,prefix='000',section,parcelNumber;
-      const full=ref.match(/^(\d{5})(\d{3})([A-Z0-9]{2})(\d{4})$/);
-      if(full){[,code,prefix,section,parcelNumber]=full}
-      else{
-        const short=ref.match(/^([A-Z]{1,2})0*(\d{1,4})$/);
-        if(!short)throw Error('Référence attendue : AD 243 ou 33063000AD0243.');
-        if(!city.trim())throw Error('Ajoutez la commune et son code postal pour retrouver la parcelle.');
-        const post=city.match(/\b\d{5}\b/)?.[0];if(!post)throw Error('Ajoutez le code postal à la commune.');
-        const geo=await json('https://data.geopf.fr/geocodage/search?q='+encodeURIComponent(city)+'&type=municipality&limit=1');
-        const match=geo.features?.[0];if(!match||match.properties.score<.55||match.properties.postcode!==post)throw Error('Commune introuvable. Vérifiez son nom et son code postal.');
-        code=match.properties.citycode;section=short[1].padStart(2,'0');parcelNumber=short[2].padStart(4,'0');
-      }
-      const params=new URLSearchParams({code_insee:code,section,numero:parcelNumber});if(prefix!=='000')params.set('com_abs',prefix);
-      const data=await json('https://apicarto.ign.fr/api/cadastre/parcelle?'+params);
-      let found=(data.features||[]).filter(f=>f.properties?.code_insee===code&&f.properties?.section===section&&f.properties?.numero===parcelNumber);
-      if(full)found=found.filter(f=>f.properties.idu===ref);
-      if(!found.length)throw Error('Parcelle introuvable. Vérifiez la commune, la section et le numéro.');
-      if(found.length>1)throw Error('Plusieurs parcelles portent cette référence. Utilisez la référence cadastrale complète.');
-      const parcel=found[0],box=bbox(parcel.geometry.coordinates),lon=(box[0]+box[2])/2,lat=(box[1]+box[3])/2;
-      return {type:'Feature',geometry:{type:'Point',coordinates:[lon,lat]},properties:{label:'Parcelle '+section+' '+Number(parcelNumber)+' · '+parcel.properties.nom_com,citycode:code,parcelArea:parcel.properties.contenance,parcelId:parcel.properties.idu}};
-    }
-    async function salesForSections(code,sections){const out=[];for(let i=0;i<sections.length;i+=3){const batch=sections.slice(i,i+3);const values=await Promise.allSettled(batch.map(async s=>{let data=await json('https://dvf-api.data.gouv.fr/mutations/'+encodeURIComponent(code)+'/'+encodeURIComponent(s.code));return data.data||[]}));for(const v of values)if(v.status==='fulfilled')out.push(...v.value);if(i===0&&values.every(v=>v.status==='rejected'))throw Error('Les données de ventes sont momentanément indisponibles.');if(out.length>5000)break}return out}
-    function cleanSales(rows,lon,lat,surface,terrain){const groups=new Map(),cutoff=new Date();cutoff.setFullYear(cutoff.getFullYear()-5);for(const row of rows){if(row.nature_mutation!=='Vente'||row.type_local!=='Maison')continue;const price=Number(row.valeur_fonciere),area=Number(row.surface_reelle_bati),x=Number(row.longitude),y=Number(row.latitude),date=new Date(row.date_mutation),land=Number(row.surface_terrain);if(!Number.isFinite(price)||!Number.isFinite(area)||!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(date.getTime())||date<cutoff||area<20||price<30000)continue;const km=distance(lon,lat,x,y),sqm=price/area;if(km>5||sqm<400||sqm>30000||area<surface*.6||area>surface*1.5)continue;const key=row.id_mutation+'-'+row.numero_disposition;const signature=area+'-'+row.id_parcelle;let group=groups.get(key);if(!group){group={seen:new Set(),houses:[]};groups.set(key,group)}if(group.seen.has(signature))continue;group.seen.add(signature);group.houses.push({price,area,land:Number.isFinite(land)?land:0,rooms:Number(row.nombre_pieces_principales)||0,km,date:row.date_mutation,sqm,street:row.adresse_nom_voie||row.nom_commune||'Vente',parcel:row.id_parcelle})}
-      let sales=[...groups.values()].filter(g=>g.houses.length===1).map(g=>g.houses[0]);if(terrain>0){let landMatch=sales.filter(s=>!s.land||s.land>=terrain*.35&&s.land<=terrain*2.8);if(landMatch.length>=4)sales=landMatch}return sales}
-    function choose(sales){const now=Date.now();const tiers=[{km:1.5,months:30,ratio:.35},{km:3,months:36,ratio:.4},{km:5,months:60,ratio:.5}];for(const t of tiers){let selected=sales.filter(s=>s.km<=t.km&&(now-new Date(s.date).getTime())/2629800000<=t.months);if(selected.length>=4)return {selected,tier:t}}return {selected:sales,tier:tiers[2]}}
-    function relevanceScore(s,surface){const area=Math.max(0,1-Math.abs(s.area-surface)/(surface*.5)),near=Math.max(0,1-s.km/5),recent=Math.max(0,Math.min(1,1-(Date.now()-new Date(s.date).getTime())/2629800000/60));return Math.round(45*area+35*near+20*recent)}
-    function render(feature,surface,terrain,sales,picked){result.dataset.state='success';const selected=picked.selected,tier=picked.tier,label=feature.properties.label,km=Math.max(...selected.map(s=>s.km)),prices=selected.map(s=>s.sqm),center=median(prices)*surface,low=quantile(prices,.25)*surface,high=quantile(prices,.75)*surface,latest=selected.map(s=>s.date).sort().at(-1),shown=[...selected].map(s=>({...s,relevance:relevanceScore(s,surface)})).sort((a,b)=>b.relevance-a.relevance||a.km-b.km).slice(0,6);const confidence=selected.length>=12?'Échantillon solide':selected.length>=6?'Échantillon modéré':'Échantillon limité';result.innerHTML='<div class="output"><div class="result-head"><div><p class="eyebrow">Estimation fondée sur les ventes</p><h2>Valeur indicative</h2></div><div class="result-actions"><span class="badge">'+confidence+'</span><button type="button" class="new-estimate-button">Nouvelle estimation</button><button type="button" class="print-button">Imprimer / enregistrer en PDF</button></div></div><p class="address">'+escape(label)+(feature.properties.parcelArea?' · Contenance cadastrale : '+number.format(feature.properties.parcelArea)+' m²':'')+'</p><p class="report-context">Surface habitable : '+number.format(surface)+' m²'+(terrain>0?' · Terrain déclaré : '+number.format(terrain)+' m²':'')+' · Édité le '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'long'}).format(new Date())+'</p><div class="value">'+euro.format(center)+'</div><p class="range">Fourchette observée&nbsp;: <strong>'+euro.format(low)+' – '+euro.format(high)+'</strong></p><div class="metrics"><div class="metric"><b>'+number.format(selected.length)+'</b><span>ventes retenues</span></div><div class="metric"><b>'+number.format(median(prices))+' €</b><span>prix médian / m²</span></div><div class="metric"><b>'+number.format(km*1000)+' m</b><span>vente la plus éloignée</span></div></div><div class="selection-scope"><strong>Périmètre utilisé pour le calcul</strong>Parmi les secteurs cadastraux consultés : ventes à moins de '+String(tier.km).replace('.',',')+' km, sur les '+tier.months+' derniers mois, pour des maisons de '+number.format(surface*.6)+' à '+number.format(surface*1.5)+' m².</div><h3 class="section-title">Ventes comparables</h3><p class="note">'+number.format(shown.length)+' ventes affichées sur '+number.format(selected.length)+' retenues, classées par pertinence. Score sur 100 : surface (45 points), distance sur 5 km (35 points) et date sur 5 ans (20 points). Il sert au classement et ne pondère pas le prix. Projection à votre surface : prix vendu × '+number.format(surface)+' m² ÷ surface vendue. Elle ne corrige pas le terrain, le nombre de pièces ni l’état du bien. Dernière vente retenue : '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium'}).format(new Date(latest))+'.</p><div class="sales">'+shown.map(s=>'<div class="sale"><div><strong>'+escape(s.street)+'</strong><small>'+new Intl.DateTimeFormat('fr-FR',{month:'short',year:'numeric'}).format(new Date(s.date))+' · '+number.format(s.area)+' m² · '+(s.rooms>0?number.format(s.rooms)+' pièces · ':'pièces n.d. · ')+(s.land>0?'terrain '+number.format(s.land)+' m² · ':'terrain n.d. · ')+(s.km<1?number.format(s.km*1000)+' m':s.km.toFixed(1).replace('.',',')+' km')+'</small><span class="relevance '+(s.relevance>=75?'':s.relevance>=50?'mid':'low')+'">Pertinence '+s.relevance+'/100</span></div><div class="amount"><span class="amount-label">Prix vendu</span><strong class="actual-price">'+euro.format(s.price)+'</strong><small>'+number.format(s.sqm)+' €/m²</small><div class="projection"><span>Rapporté à votre surface</span><b>'+euro.format(s.sqm*surface)+'</b></div></div></div>').join('')+'</div><div class="notice">Cette fourchette repose sur les ventes enregistrées. Le terrain peut être absent ou partiel dans DVF ; l’état du bien, les travaux et les prestations ne sont pas pris en compte. Ce calcul ne constitue pas une expertise.</div><div class="sources">Données&nbsp;: <a href="https://www.data.gouv.fr/datasets/demandes-de-valeurs-foncieres" target="_blank" rel="noopener">DVF · DGFiP</a> · Localisation&nbsp;: <a href="https://adresse.data.gouv.fr/outils/api-doc/adresse" target="_blank" rel="noopener">BAN / IGN</a> et <a href="https://apicarto.ign.fr/api/doc/cadastre" target="_blank" rel="noopener">Cadastre / IGN</a>. '+number.format(sales.length)+' ventes valides repérées dans le secteur.</div></div>'}
-    result.addEventListener('click',e=>{if(e.target.closest('.print-button'))window.print();if(e.target.closest('.new-estimate-button')){form.reset();setMode('address');result.dataset.state='idle';result.innerHTML=initialResultHtml;setSearchCollapsed(false);searchPanel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}});
-    form.addEventListener('submit',async e=>{e.preventDefault();const address=form.address.value.trim(),reference=form.elements.namedItem('parcel-ref').value.trim(),parcelCity=form.elements.namedItem('parcel-city').value.trim(),surface=Number(form.surface.value),terrain=Number(form.terrain.value||0);if(mode==='address'&&!address||mode==='parcel'&&!reference||surface<20||surface>1000)return;button.disabled=true;button.innerHTML='<span class="spinner" aria-hidden="true"></span>Recherche des ventes…';try{status(mode==='address'?'Localisation de l’adresse…':'Recherche de la parcelle…');const feature=mode==='address'?await geocode(address):await parcelLocation(reference,parcelCity),[lon,lat]=feature.geometry.coordinates,code=feature.properties.citycode;status('Recherche des secteurs cadastraux proches…');const cadas=await json('https://cadastre.data.gouv.fr/bundler/cadastre-etalab/communes/'+encodeURIComponent(code)+'/geojson/sections');let sections=(cadas.features||[]).map(f=>({code:String(f.properties.prefixe||'000')+String(f.properties.code||''),km:boxDistance(lon,lat,bbox(f.geometry.coordinates))})).filter(s=>s.code.length>=4).sort((a,b)=>a.km-b.km).slice(0,14);if(!sections.length)throw Error('Aucun secteur cadastral trouvé pour cette commune.');status('Lecture des ventes récentes autour de la maison…');let rows=await salesForSections(code,sections.slice(0,5)),sales=cleanSales(rows,lon,lat,surface,terrain),picked=choose(sales);if(picked.selected.length<6&&sections.length>5){status('Recherche élargie aux rues voisines…');rows.push(...await salesForSections(code,sections.slice(5,14)));sales=cleanSales(rows,lon,lat,surface,terrain);picked=choose(sales)}if(picked.selected.length<3){message('Pas assez de ventes comparables','Nous avons trouvé moins de trois maisons similaires vendues à proximité durant les cinq dernières années. Essayez une adresse plus précise ou vérifiez la surface.');return}render(feature,surface,terrain,sales,picked);if(window.matchMedia('(max-width: 800px)').matches){setSearchCollapsed(true);requestAnimationFrame(()=>result.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))}}catch(err){message('Estimation impossible',err.message||'Une erreur est survenue.',true)}finally{button.disabled=false;button.textContent='Estimer à partir des ventes'}});
-    if(document.modelContext?.registerTool){
-      const lifecycle=new AbortController();
-      Promise.resolve(document.modelContext.registerTool({
-        name:'estimate_house',title:'Estimer une maison',description:'Saisir une adresse française et une surface habitable pour afficher une estimation fondée sur les ventes DVF.',
-        inputSchema:{type:'object',properties:{address:{type:'string',description:'Adresse avec code postal et commune'},surface:{type:'number',description:'Surface habitable en m²'},terrain:{type:'number',description:'Surface du terrain en m², facultatif'}},required:['address','surface'],additionalProperties:false},
-        annotations:{readOnlyHint:false,untrustedContentHint:false},
-        async execute(input){
-          if(typeof input.address!=='string'||!/(^|\D)\d{5}(\D|$)/.test(input.address)||!Number.isFinite(input.surface)||input.surface<20||input.surface>1000||input.terrain!==undefined&&(!Number.isFinite(input.terrain)||input.terrain<0||input.terrain>100000))throw Error('Adresse avec code postal et surface de 20 à 1000 m² requises.');
-          setMode('address');form.address.value=input.address;form.surface.value=String(input.surface);form.terrain.value=input.terrain===undefined?'':String(input.terrain);form.requestSubmit();
-          return await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>{observer.disconnect();reject(Error('La recherche a expiré.'))},60000);const observer=new MutationObserver(()=>{if(button.disabled)return;const title=result.querySelector('h2')?.textContent;if(title==='Recherche en cours')return;observer.disconnect();clearTimeout(timeout);if(title!=='Valeur indicative')reject(Error(result.innerText));else resolve({address:result.querySelector('.address')?.textContent,estimate:result.querySelector('.value')?.textContent,range:result.querySelector('.range')?.textContent,comparableSales:result.querySelector('.metric b')?.textContent})});observer.observe(result,{subtree:true,childList:true,characterData:true});});
-        }
-      },{signal:lifecycle.signal})).catch(()=>{});
-    }
-  })();
-  </script>
+  <script src="./app.js" defer></script>
 </body>
 </html>
